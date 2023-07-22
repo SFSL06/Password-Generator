@@ -3,7 +3,7 @@
 # Password-Generator. 
 An application to generate a random password.
 
-![Project Screenshot](Assets/05-javascript-challenge-demo.png)
+![Project Screenshot](assets/05-javascript-challenge-demo.png)
 
 ## Description
 
