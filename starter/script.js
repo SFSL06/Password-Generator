@@ -1,3 +1,4 @@
+
 // Array of special characters to be included in password
 var specialCharacters = [
   '@',
@@ -88,35 +89,44 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+// var allCharacters = upperCasedCharacters.concat(lowerCasedCharacters, numericCharacters, specialCharacters);
+
+var selectedCharacters = [];
 // Function to prompt user for password options
 function getPasswordOptions() {
 
 }
 
 // Function for getting a random element from an array
-function getRandom() {
-  pswdCharacter = lowerCasedCharacters[Math.floor(Math.random()*lowerCasedCharacters.length)];
-  return pswdCharacter;
-}
-
+function getRandom(newArrayString) 
+  {
+    
+    pswdCharacter = newArrayString[Math.floor(Math.random()*newArrayString.length)];
+    return pswdCharacter;
+  }
+ 
 // Function to generate password with user input
-function generatePassword(pswdLength) {
+function generatePassword(pswdLength, newArrayString)
+{
   var password = [];
   for (i=0; i<pswdLength; i++)
   {
-   pswdCharacter = getRandom();
-   console.log(pswdCharacter);
+   pswdCharacter = getRandom(newArrayString);
    password.push(pswdCharacter);
+   
   }
+  
   //The join method will eliminate the commas in the password array
   password = password.join("");
-  passwordString = password.toString();
-  console.log("Password: " + passwordString);
+  password = password.toString();
+  console.log("Password: " + password);
   return
 }
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
+// Add event listener to generate button
+generateBtn.addEventListener('click', writePassword);
 
 //Write password to the #password input
 function writePassword() 
@@ -130,11 +140,52 @@ if (pswdLength < 8 || pswdLength > 129)
 }
 else
 {
-var password = generatePassword(pswdLength);
-var passwordText = document.querySelector('#password');
-passwordText.value = passwordString;
-console.log(passwordText);
+
+if (confirm ("Do you want to have Uppercase characters?") == true)
+{
+  var userInputUpperCase = true ;
+  selectedCharacters.push(upperCasedCharacters);
 }
+if (confirm ("Do you want to have Lowercase characters?") == true)
+{
+  var userInputLowerCase = true ; 
+  selectedCharacters.push(lowerCasedCharacters);
 }
-// Add event listener to generate button
-generateBtn.addEventListener('click', writePassword);
+if (confirm ("Do you want to have Numeric characters?") == true)
+{
+  var userInputNumeric = true ;
+  selectedCharacters.push(numericCharacters);
+}
+
+if (confirm ("Do you want to have Special characters?") == true)
+{
+  var userInputSpecial = true ;
+  selectedCharacters.push(specialCharacters)
+}
+
+var mySelectedCharacters = selectedCharacters.length;
+
+myOutput = []; // The output array
+var myNewArray = []; // Initialize the array for inserting sub-array
+for (var i = 0; i < mySelectedCharacters; i++) {
+for (var j = 0; j < selectedCharacters[i].length; j++) {
+  myNewArray.push(selectedCharacters[i][j]); // Add items from same column into sub-array
+  console.log(myNewArray);
+}
+
+}
+ const newArrayString = myNewArray.join("");
+
+ console.log(newArrayString);
+ 
+ var passwordString = generatePassword(pswdLength, newArrayString);
+  var passwordText = document.querySelector('#password');
+  passwordText.value = passwordString;
+  console.log(passwordText);
+}
+// else
+//   {
+//     alert("Password characters cannot be null")
+//     writePassword();
+//   }
+}
