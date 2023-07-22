@@ -89,39 +89,34 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-//Initialize an array to store the characters to generate password
+//Initialize an array to store the characters which will be used to generate password
 var selectedCharacters = [];
+
 // Function to prompt user for password options
 function getPasswordOptions() {
 
-if (confirm ("Do you want to have Uppercase characters?") == true)
+if (confirm ("Do you want to have Uppercased characters in password?") == true)
 {
-  var userInputUpperCase = true ;
+  //add the Upper cased characters array to the array which will generate password characters
   selectedCharacters.push(upperCasedCharacters);  
 }
-if (confirm ("Do you want to have Lowercase characters?") == true)
+if (confirm ("Do you want to have Lowercased characters in password?") == true)
 {
-  var userInputLowerCase = true ; 
+  //add the Lower cased characters array to the array which will generate password characters
   selectedCharacters.push(lowerCasedCharacters);  
 }
-if (confirm ("Do you want to have Numeric characters?") == true)
+if (confirm ("Do you want to have Numeric characters in password?") == true)
 {
-  var userInputNumeric = true ;
+  //add the Numeric characters array to the array which will generate password characters
   selectedCharacters.push(numericCharacters); 
 }
 
-if (confirm ("Do you want to have Special characters?") == true)
+if (confirm ("Do you want to have Special characters in password?") == true)
 {
-  var userInputSpecial = true ;
+  //add the Special characters array to the array which will generate password characters
   selectedCharacters.push(specialCharacters)
 }
-
 return selectedCharacters;
-elseif 
-{
-  alert("Password characters cannot be null")
-  writePassword();
-    }
 
 }
 
@@ -140,6 +135,7 @@ function generatePassword(pswdLength, newArrayString)
   for (i=0; i<pswdLength; i++)
   {
    pswdCharacter = getRandom(newArrayString);
+   //push each randomly generated character into password array
    password.push(pswdCharacter);
    
   }
@@ -158,6 +154,7 @@ generateBtn.addEventListener('click', writePassword);
 //Write password to the #password input
 function writePassword() 
 {
+
 let userInput = prompt("How long should your password be?");
 var pswdLength = userInput;
 if (pswdLength < 8 || pswdLength > 129)
@@ -168,8 +165,13 @@ if (pswdLength < 8 || pswdLength > 129)
 else
 {
   selectedCharacters = getPasswordOptions();
-
-  var mySelectedCharacters = selectedCharacters.length;
+  if (selectedCharacters == "")
+   {
+    alert("Password characters cannot be null");
+    selectedCharacters = getPasswordOptions();
+    }
+  
+var mySelectedCharacters = selectedCharacters.length;
 
 // Combine the arrays of all the requested password characters into one array
 
@@ -179,11 +181,11 @@ for (var j = 0; j < selectedCharacters[i].length; j++) {
   myNewArray.push(selectedCharacters[i][j]); // Add items from same column into sub-array
 }
 }
+//Eliminates commas in the array
  const newArrayString = myNewArray.join("");
 
- //console.log(newArrayString); 
+ //run generate password function 
   var passwordString = generatePassword(pswdLength, newArrayString);
-  console.log("PasswordString: " + passwordString);
   var passwordText = document.querySelector('#password');
   passwordText.value = passwordString;
 
